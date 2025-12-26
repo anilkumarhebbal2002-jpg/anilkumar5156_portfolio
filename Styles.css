@@ -234,35 +234,102 @@ body {
 }
 
 /* --- MOBILE OPTIMIZATION --- */
-@media (max-width: 768px) {
-    
-    /* 1. Fix the main container to not touch edges */
-    body, .container, .main-section {
-        padding-left: 20px !important;
-        padding-right: 20px !important;
-        width: 100% !important;
-        box-sizing: border-box;
-    }
+/* --- SCROLL OFFSET FIX (Fixes the "Vision" link landing too low) --- */
+        section {
+            scroll-margin-top: 100px; /* Adds invisible space so headers aren't cut off */
+        }
 
-    /* 2. Stack your "Vision/Arsenal" buttons vertically */
-    /* Replace '.button-grid' with whatever class holds your buttons */
-    .button-grid, .nav-links, .row {
-        display: flex;
-        flex-direction: column; /* This forces them into a vertical stack */
-        gap: 15px; /* Adds space between stacked items */
-    }
+        /* --- MOBILE OPTIMIZATION ENGINE (UPDATED) --- */
+        @media (max-width: 1024px) {
+            /* 1. LAYOUT ORDER & BASICS */
+            .frame { 
+                grid-template-columns: 1fr; 
+                height: auto; 
+                padding-bottom: 40px; 
+                margin-top: 20px;
+                display: flex;
+                flex-direction: column;
+            }
 
-    /* 3. Make text readable */
-    h1 {
-        font-size: 2.5rem; /* Smaller title for phone */
-    }
-    p {
-        font-size: 1rem;
-        line-height: 1.6;
-        text-align: left; /* Easier to read on mobile than centered */
-    }
-}
+            /* 2. IMAGE / HOLOGRAM (Center Aligned) */
+            .center-panel { 
+                order: 1; 
+                height: 350px; 
+                margin-top: 20px; 
+                width: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+            .hologram-frame { 
+                width: 240px; 
+                height: 320px; 
+                margin: 0 auto; /* Forces center horizontally */
+            }
 
+            /* 3. HERO TEXT (Center Aligned) */
+            .right-panel { 
+                order: 2; 
+                padding: 20px; 
+                text-align: center; 
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+            .hero-title { font-size: 15vw !important; line-height: 1; margin-bottom: 10px; text-align: center; }
+            .hero-subtitle { font-size: 20px; margin-top: 5px; text-align: center; }
+
+            /* 4. NAVIGATION LINKS (Aligned & Spaced) */
+            .left-panel { 
+                order: 3; 
+                width: 100%; 
+                border-right: none; 
+                border-top: 1px solid rgba(255,255,255,0.1); 
+                display: flex; 
+                flex-wrap: wrap; 
+                justify-content: center; /* Centers the buttons */
+                gap: 15px; /* Space between buttons */
+                padding: 30px 10px; 
+            }
+            .contact-item {
+                font-size: 14px;
+                padding: 10px 20px;
+                margin: 0; /* Remove old margins to let Flex gap handle spacing */
+                flex-grow: 0;
+            }
+
+            /* 5. SECTIONS & PADDING */
+            .info-section { grid-template-columns: 1fr; padding: 40px 5%; }
+            .what-i-do-container, .arsenal-box, .video-grid { padding: 20px 5%; }
+            
+            /* 6. STRATEGIC CREATIVITY (Centered) */
+            #bio .info-box h2 {
+                text-align: center !important;
+                border-left: none !important; /* Removes the side border line for cleaner center look */
+                padding-left: 0 !important;
+            }
+            #bio .info-box {
+                text-align: center !important; /* Centers the paragraphs */
+                padding: 30px 20px !important;
+            }
+
+            /* 7. ARSENAL & SQUARES */
+            .arsenal-box { padding: 30px 10px; }
+            .service-card { width: 140px; height: 140px; padding: 15px; } 
+            .service-card img { width: 35px; }
+            .service-card h3 { font-size: 14px; }
+
+            /* 8. VIDEO GRID (Spacing Fixed) */
+            .video-grid {
+                display: flex;
+                flex-direction: column; /* Stacks videos vertically */
+                gap: 40px !important; /* Force large space between videos */
+            }
+            .video-item {
+                width: 100%;
+                margin-bottom: 10px; /* Extra safety margin */
+            }
+        }
 /* Define the animation */
 @keyframes slideUpFade {
     from {
