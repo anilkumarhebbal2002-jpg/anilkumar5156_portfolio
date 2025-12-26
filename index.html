@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anil Kumar | Professional Video Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --accent: #9b6dff;
+            --cyan: #00f2ff;
+            --dark-cyan: #008b9b;
+            --pink: #ff4ecd;
+            --gold: #ffcc00;
+            --glass: rgba(255, 255, 255, 0.05);
+            --soft-violet: #d1b9ff; 
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            background: #03070a; 
+            color: #fff; 
+            overflow-x: hidden;
+            animation: bgPulse 10s ease-in-out infinite;
+        }
+        @keyframes bgPulse {
+            0%, 100% { background: #03070a; }
+            50% { background: #0a111a; }
+        }
+
+        #particles-js { position: fixed; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+
+        /* --- POP-UP ANIMATION STYLES --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .reveal.active-pop {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* --- GLOBAL TRANSITIONS --- */
+        .info-box, .service-card, .what-i-do-card, .contact-item, .hero-title, .hero-subtitle, h2, i, img, p, li, span, .social-btn {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* --- HERO: NAME & SUBTITLE --- */
+        .hero-title {
+            font-size: 110px; font-weight: 900; text-transform: uppercase;
+            line-height: 0.82; letter-spacing: -3px;
+            background: linear-gradient(to bottom, #ffffff 40%, var(--soft-violet) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            display: block; position: relative; z-index: 1000 !important;
+        }
+        .hero-title:hover {
+            background: linear-gradient(to bottom, #ffffff, var(--dark-cyan)) !important;
+            -webkit-background-clip: text !important;
+            -webkit-text-fill-color: transparent !important;
+            filter: drop-shadow(0 0 20px rgba(0, 242, 255, 0.6));
+            transform: scale(1.03);
+            cursor: pointer;
+        }
+        .hero-subtitle {
+            color: var(--accent); font-weight: 700; font-size: 30px; letter-spacing: 4px; 
+            text-transform: uppercase; margin-top: 15px; position: relative; z-index: 1000;
+        }
+
+        /* --- HOLOGRAM RINGS --- */
+        .center-panel { position: relative; display: flex; justify-content: center; align-items: center; z-index: 50; }
+        .ring { position: absolute; border: 3px solid rgba(155, 109, 255, 0.4); border-radius: 50%; bottom: 8%; animation: pulse 3s infinite; pointer-events: none; }
+        .r1 { width: 350px; height: 130px; } .r2 { width: 480px; height: 170px; animation-delay: 1s; } .r3 { width: 610px; height: 210px; animation-delay: 2s; }
+        @keyframes pulse { 0% { transform: scale(1); opacity: 0.5; } 100% { transform: scale(1.3); opacity: 0; } }
+
+        .hologram-frame { 
+            width: 280px; height: 400px; background: rgba(155, 109, 255, 0.1); border-radius: 140px 140px 30px 30px; 
+            box-shadow: 0 0 40px rgba(155, 109, 255, 0.4); animation: float 4s ease-in-out infinite, glowPulse 3s ease-in-out infinite; 
+            z-index: 60; overflow: hidden; border: 2.5px solid rgba(155, 109, 255, 0.5); position: relative;
+        }
+        .hologram-frame img { width: 100%; height: 100%; object-fit: cover; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-15px); } }
+
+        /* --- LEFT PANEL & BUTTONS --- */
+        .contact-item.active {
+            color: var(--cyan) !important;
+            border-color: var(--cyan) !important;
+            background: rgba(0, 242, 255, 0.15) !important;
+            transform: translateX(12px) scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+        }
+
+        /* --- POPUP LOGIC --- */
+        .info-box:hover, .what-i-do-card:hover {
+            transform: translateY(-15px) scale(1.03);
+            border-color: var(--cyan) !important;
+            box-shadow: 0 15px 40px rgba(0, 242, 255, 0.3);
+            background: rgba(255, 255, 255, 0.08);
+            z-index: 80;
+        }
+        .info-box:hover p, .info-box:hover li, .info-box:hover span { color: var(--soft-violet) !important; }
+        h2:hover { color: var(--cyan) !important; text-shadow: 0 0 20px var(--cyan); }
+
+        /* --- LAYOUTS --- */
+        .slide { width: 100%; min-height: 100vh; position: relative; display: flex; align-items: center; justify-content: center; padding: 40px; }
+        .frame { width: 95%; max-width: 1400px; min-height: 85vh; display: grid; grid-template-columns: 280px 1fr 1.5fr; background: var(--glass); border-radius: 24px; border: 1px solid rgba(155, 109, 255, 0.2); backdrop-filter: blur(15px); overflow: hidden; z-index: 40; position: relative; }
+        .left-panel { padding: 40px; background: rgba(0, 0, 0, 0.4); border-right: 1px solid rgba(255, 255, 255, 0.05); }
+        .contact-item { background: rgba(17, 26, 34, 0.8); padding: 12px 16px; border-radius: 8px; margin-bottom: 12px; font-size: 13px; border: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; text-decoration: none; color: white; }
+        .contact-item:hover { transform: translateX(12px); color: var(--cyan); background: rgba(0, 242, 255, 0.1); }
+
+        .info-section { padding: 60px 8%; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; position: relative; z-index: 40; }
+        .info-box { background: rgba(255, 255, 255, 0.03); padding: 35px; border-radius: 24px; border: 1px solid rgba(155, 109, 255, 0.2); backdrop-filter: blur(10px); }
+        .info-box h2 { font-size: 30px; font-weight: 800; margin-bottom: 25px; color: var(--accent); border-left: 5px solid var(--pink); padding-left: 20px; }
+
+        /* --- ARSENAL (RESTORED TO LARGE SQUARE DESIGN) --- */
+        .software-grid-container { padding: 60px 8%; display: flex; justify-content: center; }
+        
+        /* The Big Outer Box */
+        .arsenal-box { 
+            width: 100%; max-width: 1000px; background: rgba(255, 255, 255, 0.03); 
+            padding: 50px; border-radius: 30px; border: 1px solid rgba(155, 109, 255, 0.2); 
+            backdrop-filter: blur(10px); text-align: center;
+        }
+
+        .software-cards { 
+            display: flex; flex-wrap: wrap; justify-content: center; gap: 25px; margin-top: 40px;
+        }
+
+        /* THE SQUARE BUTTONS */
+        .service-card { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(10px); 
+            padding: 25px; 
+            border-radius: 24px; 
+            border: 1px solid rgba(255,255,255,0.1); 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            text-align: center; 
+            gap: 15px; 
+            width: 200px; /* RESTORED WIDTH */
+            height: 200px; /* RESTORED HEIGHT */
+            transition: 0.3s ease;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--cyan) !important;
+            box-shadow: 0 0 35px rgba(0, 242, 255, 0.4), inset 0 0 20px rgba(0, 242, 255, 0.05);
+            background: rgba(0, 242, 255, 0.02);
+            z-index: 80;
+        }
+        .service-card img { width: 55px; transition: 0.3s; }
+        .service-card h3 { font-size: 18px; font-weight: 700; margin: 0; }
+        .service-card:hover img { filter: drop-shadow(0 0 15px var(--cyan)) brightness(1.4); transform: scale(1.1); }
+
+        /* --- VIDEO GRID (UNCROPPED) --- */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; padding: 40px 8%; }
+        .video-item { background: #000; border-radius: 15px; overflow: hidden; border: 1px solid rgba(255,255,255,0.1); aspect-ratio: 9/16; }
+        .video-item:hover { transform: scale(1.05); border-color: var(--cyan); box-shadow: 0 0 20px var(--cyan); }
+        video { width: 100%; height: 100%; object-fit: contain; } /* FIXED CROPPING */
+
+        /* --- WHAT I DO (HORIZONTAL) --- */
+        .what-i-do-container { padding: 40px 8%; display: flex; flex-wrap: wrap; justify-content: center; gap: 30px; width: 100%; }
+        .what-i-do-card { background: rgba(255, 255, 255, 0.03); padding: 40px 25px; border-radius: 24px; border: 1px solid rgba(155, 109, 255, 0.2); backdrop-filter: blur(10px); text-align: center; flex: 1; min-width: 250px; max-width: 350px; }
+        .what-i-do-card:hover { transform: translateY(-15px) scale(1.05); border-color: var(--cyan) !important; box-shadow: 0 15px 40px rgba(0, 242, 255, 0.3); background: rgba(255, 255, 255, 0.08); z-index: 80; }
+        .what-i-do-card i { font-size: 45px; color: var(--accent); margin-bottom: 25px; transition: 0.3s; }
+        .what-i-do-card:hover i { color: var(--cyan) !important; filter: drop-shadow(0 0 15px var(--cyan)); transform: scale(1.2); }
+        .what-i-do-card h3 { font-size: 22px; color: #fff; margin-bottom: 15px; font-weight: 700; }
+
+        /* --- SOCIAL GRID --- */
+        .social-container { padding: 80px 8%; text-align: center; }
+        .social-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; margin-top: 40px; background: rgba(255,255,255,0.03); padding: 40px; border-radius: 30px; border: 1px solid rgba(155, 109, 255, 0.2); }
+        .social-btn { padding: 15px 30px; border-radius: 50px; font-weight: 700; text-decoration: none; font-size: 16px; display: flex; align-items: center; gap: 12px; border: 1px solid rgba(255,255,255,0.1); color: white; background: rgba(255,255,255,0.05); }
+        .social-btn:hover { transform: translateY(-10px) scale(1.1); box-shadow: 0 10px 30px rgba(0, 242, 255, 0.3); border-color: var(--cyan); color: var(--cyan); }
+
+        /* --- MOBILE OPTIMIZATION ENGINE --- */
+        @media (max-width: 1024px) {
+            .frame { grid-template-columns: 1fr; height: auto; padding-bottom: 40px; margin-top: 20px; }
+            .left-panel { order: 3; width: 100%; border-right: none; border-top: 1px solid rgba(255,255,255,0.1); display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px; }
+            .center-panel { order: 1; height: 350px; margin-top: 20px; }
+            .right-panel { order: 2; padding: 20px; text-align: center; }
+            .hero-title { font-size: 15vw !important; line-height: 1; margin-bottom: 10px; }
+            .hero-subtitle { font-size: 20px; margin-top: 5px; }
+            .hologram-frame { width: 220px; height: 300px; }
+            .info-section { grid-template-columns: 1fr; padding: 40px 5%; }
+            .what-i-do-container, .arsenal-box, .video-grid { padding: 20px 5%; }
+            .arsenal-box { padding: 30px 10px; }
+            .service-card { width: 140px; height: 140px; padding: 15px; } /* Mobile Squares */
+            .service-card img { width: 35px; }
+            .service-card h3 { font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="particles-js"></div>
+
+    <section class="slide">
+        <div class="frame">
+            <div class="left-panel">
+                <a href="#about" class="contact-item" id="nav-about"><i class="fas fa-star"></i>&nbsp; Vision</a>
+                <a href="#software" class="contact-item" id="nav-software"><i class="fas fa-tools"></i>&nbsp; Arsenal</a>
+                <a href="#whatido" class="contact-item" id="nav-whatido"><i class="fas fa-film"></i>&nbsp; What I Do</a>
+                <a href="#bio" class="contact-item" id="nav-bio"><i class="fas fa-user-tie"></i>&nbsp; About Me</a>
+                <a href="mailto:anilkumar018@gmail.com" class="contact-item"><i class="far fa-envelope"></i>&nbsp; Email</a>
+                <a href="https://wa.me/919901067893" class="contact-item"><i class="fab fa-whatsapp"></i>&nbsp; Whatsapp</a>
+                
+                <a href="#contact" class="contact-item"><i class="fas fa-paper-plane"></i>&nbsp; Connect With Me</a>
+            </div>
+            
+            <div class="center-panel">
+                <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+                <div class="hologram-frame">
+                    <img src="anil kumar.png" alt="Anil Kumar">
+                </div>
+            </div>
+            
+            <div class="right-panel" style="padding: 60px; display: flex; flex-direction: column; justify-content: center;">
+                <h1 class="hero-title">ANIL<br>KUMAR</h1>
+                <p class="hero-subtitle">Video Editor</p>
+                <div>
+                    <a href="#work" style="padding: 10px 28px; font-size: 14px; border-radius: 50px; background: #fff; color: #000; font-weight: 700; text-decoration: none; display: inline-block; margin-top: 25px; text-transform: uppercase;" onmouseover="this.style.background='var(--cyan)'; this.style.transform='scale(1.1)';" onmouseout="this.style.background='#fff'; this.style.transform='scale(1)';">View My Work</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="info-section reveal" id="about">
+        <div class="info-box">
+            <h2>The Vision</h2>
+            <div style="font-size: 16px; line-height: 1.6; color: rgba(255,255,255,0.9);">
+                <p>My vision is to create scroll-stopping content built for the modern digital audience.</p>
+                <p style="margin-top: 15px;">Where every frame is edited with purpose and every pixel is crafted with passion to connect your brand to the world.</p>
+                <p style="margin-top: 15px;">Transforming concepts into cinematic reality through the fusion of high-end video editing and hyper-realistic CGI.</p>
+                <p style="margin-top: 15px;">We don't just edit content; we engineer visual experiences that define the future of advertising.</p>
+            </div>
+        </div>
+        <div class="info-box">
+            <h2>The Experience</h2>
+            <ul style="list-style: none; opacity: 0.9; font-size: 16px;">
+                <li style="margin-bottom: 20px; display: flex; align-items: flex-start;"><i class="fas fa-check-circle" style="color:var(--pink); margin-right:12px; margin-top: 5px;"></i><span>I grew social media accounts from scratch, building strong visibility and organic audience engagement.</span></li>
+                <li style="margin-bottom: 20px; display: flex; align-items: flex-start;"><i class="fas fa-check-circle" style="color:var(--pink); margin-right:12px; margin-top: 5px;"></i><span>I handled end-to-end content production, including ideation, editing, posting, and performance optimization.</span></li>
+                <li style="margin-bottom: 20px; display: flex; align-items: flex-start;"><i class="fas fa-check-circle" style="color:var(--pink); margin-right:12px; margin-top: 5px;"></i><span>I created and edited high-impact videos for Numerology brands, including Vastu, DNA Numerology, and Pyramid content.</span></li>
+                <li style="display: flex; align-items: flex-start;"><i class="fas fa-check-circle" style="color:var(--pink); margin-right:12px; margin-top: 5px;"></i><span>I also produced engaging travel and traveling lifestyle videos, maintaining consistent brand storytelling.</span></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="software-grid-container reveal" id="software">
+        <div class="arsenal-box">
+            <h2 style="font-size: 40px; margin-bottom: 30px; display: block; text-align: center;">My Arsenal</h2>
+            <div class="software-cards">
+                <div class="service-card"><img src="https://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg"><h3>Premiere Pro</h3></div>
+                <div class="service-card"><img src="https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg"><h3>After Effects</h3></div>
+                <div class="service-card"><img src="https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg"><h3>Photoshop</h3></div>
+                <div class="service-card"><img src="capcut.jpeg.jpeg" style="border-radius:6px;"><h3>Capcut</h3></div>
+                <div class="service-card"><img src="davinci.jpeg.jpeg" style="border-radius:6px;"><h3>Davinci</h3></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" style="padding: 60px 0; text-align: center;">
+        <h2 style="font-size: 36px; font-weight: 850; color: var(--accent); margin-bottom: 30px;">Featured Reels</h2>
+        <div class="video-grid reveal">
+            <div class="video-item"><video controls><source src="reel1.mp4"></video></div>
+            <div class="video-item"><video controls><source src="reel2.mp4"></video></div>
+            <div class="video-item"><video controls><source src="reel3.mp4"></video></div>
+            <div class="video-item"><video controls><source src="reel4.mp4"></video></div>
+            <div class="video-item"><video controls><source src="reel5.mp4"></video></div>
+        </div>
+    </section>
+
+    <section id="whatido" style="padding: 80px 0; text-align: center;">
+        <h2 style="font-size: 36px; font-weight: 850; color: var(--accent); margin-bottom: 40px;">What Do I Do</h2>
+        <div class="what-i-do-container reveal">
+            <div class="what-i-do-card"><i class="fas fa-bolt"></i><h3>Short-Form Social Videos</h3><p>I create attention-grabbing edits with sharp pacing, compelling hooks, and on-screen text that keeps viewers engaged till the last frame.</p></div>
+            <div class="what-i-do-card"><i class="fas fa-film"></i><h3>Film-Style Frames Presentation</h3><p>I build story-led travel visuals and brand films that focus on mood, emotion, and smooth narrative progression.</p></div>
+            <div class="what-i-do-card"><i class="fas fa-palette"></i><h3>Visual Color Enhancement</h3><p>I refine flat, unprocessed footage into rich, cinematic, or clean modern tones tailored to your brand’s visual language.</p></div>
+            <div class="what-i-do-card"><i class="fas fa-headphones"></i><h3>Audio & Sound Crafting</h3><p>I layer music, effects, and transitions with precision to create depth, flow, and emotional impact in every video.</p></div>
+        </div>
+    </section>
+
+    <section id="bio" style="padding: 60px 8%;" class="reveal">
+        <div class="info-box" style="max-width: 1000px; margin: auto; padding: 50px; background: rgba(155, 109, 255, 0.05); text-align: left;">
+            <h2 style="border: none; text-align: center; margin-bottom: 30px;">Strategic Creativity</h2>
+            <div style="font-size: 18px; line-height: 1.8; color: rgba(255,255,255,0.9);">
+                <p>I am Anil Kumar, a creative strategist bridging the gap between business intelligence and cinematic art at the Central University of Karnataka.</p>
+                <p style="margin-top: 15px;">My edge is <strong style="color: var(--gold); text-shadow: 0 0 15px rgba(255,204,0,0.5);">"Strategic Creativity."</strong> As an MBA Scholar, I don’t just look at a timeline; I look at your market position, your target audience, and your ROI. This academic discipline allows me to treat video production as a business system—where psychology-based pacing and immersive sound design are used to capture the only currency that matters today: Attention.</p>
+                <p style="margin-top: 15px;">By fusing the analytical rigor of management with the limitless possibilities of CGI and high-end advertising, I transform abstract brand goals into high-retention visual assets. I don’t just deliver a file; I provide a professional partnership dedicated to scaling your legacy.</p>
+                <p style="font-style: italic; color: var(--cyan); font-size: 20px; margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 20px;">I’ve spent my life mastering the logic of business so that I can protect the soul of your story, because I don’t just want to build your brand I want to help the world fall in love with it.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="social-container reveal" id="contact">
+        <h2 style="font-size: 36px; font-weight: 850; color: var(--accent);">Connect With Me</h2>
+        <div class="social-grid">
+            <a href="https://www.instagram.com/_capturedbyanil?igsh=MTNsMGVicnNsamViZw%3D%3D&utm_source=qr" target="_blank" class="social-btn"><i class="fab fa-instagram"></i> Instagram</a>
+            <a href="https://www.linkedin.com/in/anil-kumar-a4b446310?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=ios_app" target="_blank" class="social-btn"><i class="fab fa-linkedin-in"></i> LinkedIn</a>
+            <a href="https://wa.me/919901067893" target="_blank" class="social-btn"><i class="fab fa-whatsapp"></i> Whatsapp</a>
+            <a href="mailto:anilkumar018@gmail.com" class="social-btn"><i class="fas fa-envelope"></i> Email Me</a>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 100, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#9b6dff" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.5 },
+                "size": { "value": 3, "random": true },
+                "line_linked": { "enable": true, "distance": 150, "color": "#00f2ff", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": { "detect_on": "window", "events": { "onhover": { "enable": false }, "onclick": { "enable": true, "mode": "push" } } },
+            "retina_detect": true
+        });
+
+        // POP-UP ANIMATION LOGIC
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active-pop');
+                } else {
+                    entry.target.classList.remove('active-pop');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // SCROLL-SPY
+        window.addEventListener('scroll', () => {
+            const sections = ['about', 'software', 'whatido', 'bio'];
+            sections.forEach(id => {
+                const el = document.getElementById(id);
+                const link = document.getElementById('nav-' + id);
+                if(el && link) {
+                    const rect = el.getBoundingClientRect();
+                    if (rect.top <= 150 && rect.bottom >= 150) {
+                        link.classList.add('active');
+                    } else {
+                        link.classList.remove('active');
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
