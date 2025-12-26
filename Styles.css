@@ -232,3 +232,55 @@ body {
     border-color:var(--cyan);
     box-shadow:0 0 35px rgba(0,242,255,0.6);
 }
+
+/* --- MOBILE OPTIMIZATION --- */
+@media (max-width: 768px) {
+    
+    /* 1. Fix the main container to not touch edges */
+    body, .container, .main-section {
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        width: 100% !important;
+        box-sizing: border-box;
+    }
+
+    /* 2. Stack your "Vision/Arsenal" buttons vertically */
+    /* Replace '.button-grid' with whatever class holds your buttons */
+    .button-grid, .nav-links, .row {
+        display: flex;
+        flex-direction: column; /* This forces them into a vertical stack */
+        gap: 15px; /* Adds space between stacked items */
+    }
+
+    /* 3. Make text readable */
+    h1 {
+        font-size: 2.5rem; /* Smaller title for phone */
+    }
+    p {
+        font-size: 1rem;
+        line-height: 1.6;
+        text-align: left; /* Easier to read on mobile than centered */
+    }
+}
+
+/* Define the animation */
+@keyframes slideUpFade {
+    from {
+        opacity: 0;
+        transform: translateY(30px); /* Start 30px lower */
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0); /* End in normal spot */
+    }
+}
+
+/* Apply it to your elements */
+.hero-text, .buttons, .card {
+    animation: slideUpFade 0.8s ease-out forwards;
+}
+
+/* Optional: Delay the second element so they cascade */
+.buttons {
+    animation-delay: 0.2s; 
+}
